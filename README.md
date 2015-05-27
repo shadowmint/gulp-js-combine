@@ -1,22 +1,31 @@
-# gulp-custom
+# gulp-combine
 
-A simple example gulp plugin.
+Combines arbitrary files into a single combined javascript file.
+
+## Why?
+
+...because, sometimes its actually quite useful to have a 'one file'
+drop in javascript file.
 
 ## Install
 
 ```
-$ npm install --save-dev gulp-debug
+$ npm install --save-dev shadowmint/gulp-js-combine#0.0.1
 ```
 
 ## Usage
 
 ```js
 var gulp = require('gulp');
-var custom = require('gulp-custom');
+var combine = require('gulp-js-combine');
 
 gulp.task('default', function () {
-	return gulp.src('src/*.js')
-		.pipe(debug({'options': true}))
+	return gulp.src('src/*')
+		.pipe(combine({ output: 'output.js' }))
 		.pipe(gulp.dest('dist'));
 });
 ```
+
+## License
+
+MIT

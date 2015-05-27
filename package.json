@@ -1,48 +1,28 @@
 {
-  "name": "gulp-debug",
-  "version": "2.0.1",
-  "description": "Debug vinyl file streams to see what files are run through your gulp pipeline",
+  "name": "gulp-js-combine",
+  "version": "0.0.1",
+  "description": "Packs arbitrary content into a javascript file",
   "license": "MIT",
-  "repository": "sindresorhus/gulp-debug",
-  "author": {
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
-  },
+  "repository": "shadowmint/gulp-js-combine",
   "engines": {
     "node": ">=0.10.0"
   },
-  "scripts": {
-    "test": "mocha"
-  },
   "files": [
-    "index.js"
+    "index.js",
+    "build"
   ],
   "keywords": [
-    "gulpplugin",
-    "debug",
-    "debugging",
-    "inspect",
-    "log",
-    "logger",
-    "vinyl",
-    "file",
-    "inspect",
-    "fs"
+    "gulpplugin"
   ],
   "dependencies": {
-    "chalk": "^1.0.0",
+    "buffertools": "^2.1.2",
     "gulp-util": "^3.0.0",
-    "object-assign": "^2.0.0",
-    "stringify-object": "^1.0.0",
-    "through2": "^0.6.1",
-    "tildify": "^1.0.0"
+    "through2": "^0.6.1"
   },
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "mocha": "*",
-    "proxyquire": "^1.0.1",
-    "sinon": "^1.9.1",
-    "strip-ansi": "^2.0.0"
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-nodeunit": "0.0.5",
+    "vinyl": "^0.4.6"
   }
 }
