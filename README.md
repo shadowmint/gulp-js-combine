@@ -22,6 +22,29 @@ Just run gulp in the build folder:
 
 ## Usage
 
+Running this script generates a javascript block that returns a json
+file with each input file bound to it, in the form:
+
+    {
+      'foo.txt': 'text from foo here',
+      'bar/foo.js': '(function foo() { ... }'
+    }
+
+### Options
+
+- output: The name of the single output file to generate.
+- root: The prefix to remove from the output; by default the current path.
+- bootstrap: A javascript file to invoke on the resulting json object.
+
+A typical bootstrap might look like:
+
+    (function(foo) {
+      console.log(foo);
+      document.write(foo['class1.html']);
+      document.write('<style>' + foo['class1.css'] + '</style>');
+      document.write('<script>' + foo['class1.js'] + '</script>');
+    });
+
 See the demo/ folder.
 
 ```js
