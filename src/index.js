@@ -10,7 +10,10 @@ class JsCombine extends Plugin {
 
   configure(options) {
     this.options = options ? options : {};
-    this.option('output', 'combined.js');
+    this.option('root', './');            // The prefix to remove from file names
+    this.option('bootstrap', false);      // The bootstrap script to run
+    this.option('output', 'combined.js'); // The output filename
+    this.manifest.configure(this.options);
   }
 
   handle_string(file, value, callback) {

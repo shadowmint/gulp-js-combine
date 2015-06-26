@@ -1,4 +1,3 @@
-/** A manifest of all processed content */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -7,7 +6,15 @@ Object.defineProperty(exports, '__esModule', {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
+/** A manifest of all processed content */
 
 var Manifest = (function () {
 
@@ -16,23 +23,59 @@ var Manifest = (function () {
   function Manifest() {
     _classCallCheck(this, Manifest);
 
-    this._contents = {};
+    this.contents = {};
+    this.options = {};
+    this.bootstrap = null;
   }
 
   _createClass(Manifest, [{
+    key: 'configure',
+
+    /** Configure options for this */
+    value: function configure(options) {
+      this.options = options;
+      if (this.options.root) {
+        this.options.root = _path2['default'].resolve(this.options.root) + '/';
+      }
+    }
+  }, {
     key: 'push',
 
-    /** Push content into the manfiest */
+    /**
+     * Push content into the manfiest
+     * If any root is configured, remove it from the given name value.
+     * If the bootstrap is passed, do not add to content, and save.
+     */
     value: function push(name, value) {
-      this._contents[name] = value;
+      if (this.options.root) {
+        if (name.indexOf(this.options.root) == 0) {
+          var len = this.options.root.length;
+          name = name.substring(len, name.length);
+        }
+      }
+      if (name && this.options.bootstrap && name == this.options.bootstrap) {
+        this.bootstrap = value;
+      } else {
+        this.contents[name] = value;
+      }
     }
   }, {
     key: 'emit',
 
-    /** Emit a single javascript block */
+    /**
+     * Emit a single javascript block
+     * If any bootstrap is specified, run it on the result.
+     */
     value: function emit() {
-      var json = JSON.stringify(this._contents);
-      return '(function() { return ' + json + '})()';
+      var json = JSON.stringify(this.contents);
+      var output = '(function() { return ' + json + '; })()';
+      if (this.bootstrap) {
+        var boot = JSON.stringify(this.bootstrap);
+        output = '(function() { var bootstrap = eval(' + boot + '); return bootstrap(' + output + ') })();';
+      } else {
+        output = output + ';';
+      }
+      return output;
     }
   }]);
 

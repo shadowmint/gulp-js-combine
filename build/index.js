@@ -30,7 +30,10 @@ var JsCombine = (function (_Plugin) {
     key: 'configure',
     value: function configure(options) {
       this.options = options ? options : {};
-      this.option('output', 'combined.js');
+      this.option('root', './'); // The prefix to remove from file names
+      this.option('bootstrap', false); // The bootstrap script to run
+      this.option('output', 'combined.js'); // The output filename
+      this.manifest.configure(this.options);
     }
   }, {
     key: 'handle_string',

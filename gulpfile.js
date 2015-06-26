@@ -1,17 +1,21 @@
+var run = require('run-sequence');
 var nodeunit = require('gulp-nodeunit');
 var babel = require('gulp-babel');
 var gulp = require('gulp');
 
-gulp.task('default', ['scripts']);
+/// Explicitly run items in order
+gulp.task('default', function(callback) {
+  run('scripts', 'tests', callback);
+});
 
 /// Run tests
-gulp.task('tests', function () {
-  gulp.src('./build/**/*.tests.js').pipe(nodeunit());
+gulp.task('tests', function() {
+  return gulp.src('./build/**/*.tests.js').pipe(nodeunit());
 });
 
 // Compile ES6 scripts using bable and combine
 gulp.task('scripts', function() {
-  gulp.src('./src/**/*.js')
+  return gulp.src('./src/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./build'));
 });
