@@ -1,4 +1,4 @@
-# gulp-combine
+# gulp-js-combine
 
 Combines arbitrary files into a single combined javascript file.
 
@@ -91,6 +91,26 @@ gulp.task('default', function(callback) {
 Generates the output script:
 
     (function() { var bootstrap = eval("'use strict';\n\n(function (foo) {\n  console.log(foo);\n  document.write(foo['class1.html']);\n  document.write('<style>' + foo['class1.css'] + '</style>');\n  document.write('<script>' + foo['class1.js'] + '</script>');\n});"); return bootstrap((function() { return {"class1.css":".class1 h1 {\n  color: #f00; }\n","class1.html":"<div class=\"class1\"><h1> \nHi</h1></div>","class1.js":"'use strict';\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }\n\nvar One = function One() {\n  _classCallCheck(this, One);\n\n  this.foo = 'bar';\n};"}; })()) })();
+
+### Notes
+
+Note that minification, compression, etc. is not done at all; there are other
+plugins that perform those tasks. To use them, pipe the generated files to
+the compression plugins (eg. uglify for javascript) and combine the resulting
+files.
+
+This adheres to the 'do one thing' principal in gulp.
+
+Note *also* that this does not attempt to solve the same problem as browserify;
+you may want to browserify a script *before* combining it; this plugin is for
+converting multiple files into a single file.
+
+For images, consider converting them into inline base64 strings. A number of
+gulp plugins already exist for the purpose of processing images and html in
+this way.
+
+This plugin does *not* support embedding binary content and will only process
+input string values. Preprocess binary content appropriately.
 
 ## License
 
