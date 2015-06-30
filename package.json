@@ -1,6 +1,6 @@
 {
   "name": "gulp-js-combine",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Packs arbitrary content into a javascript file",
   "license": "MIT",
   "repository": "shadowmint/gulp-js-combine",
