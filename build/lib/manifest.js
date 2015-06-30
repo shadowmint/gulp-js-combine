@@ -68,6 +68,7 @@ var Manifest = (function () {
      */
     value: function emit() {
       var json = JSON.stringify(this.contents);
+      var prefix = this.options['export'] ? 'var ' + this.options['export'] + ' = ' : '';
       var output = '(function() { return ' + json + '; })()';
       if (this.bootstrap) {
         var boot = JSON.stringify(this.bootstrap);
@@ -75,6 +76,7 @@ var Manifest = (function () {
       } else {
         output = output + ';';
       }
+      output = prefix + output;
       return output;
     }
   }]);

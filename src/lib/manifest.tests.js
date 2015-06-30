@@ -19,7 +19,6 @@ export function test_configure_root(test) {
   m.push(path.resolve('foo/bar/foo/bar'), 'bar');
   var x = m.emit();
   var y = eval(x);
-  console.log(y);
   test.ok(y['foo'] == 'foo');
   test.ok(y['foo/bar'] == 'bar');
   test.done();
@@ -35,5 +34,15 @@ export function test_configure_bootstrap(test) {
   var y = eval(x);
   test.ok(y.foo == 'foo');
   test.ok(y.bar == 'bar');
+  test.done();
+}
+
+export function test_configure_prefix(test) {
+  var m = new Manifest();
+  m.configure({root: './', export: 'prefix'});
+  m.push(path.resolve('foo'), 'foo');
+  m.push(path.resolve('bar'), 'bar');
+  var x = m.emit();
+  test.ok(x.indexOf('var prefix =') == 0);
   test.done();
 }
