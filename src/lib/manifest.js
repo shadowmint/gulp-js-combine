@@ -32,6 +32,7 @@ export class Manifest {
     }
     if (name && this.options.bootstrap && (name == this.options.bootstrap)) {
       this.bootstrap = value;
+      this.bootsym = this.options.bootsym;
     }
     else {
       this.contents[name] = value;
@@ -45,13 +46,9 @@ export class Manifest {
   emit() {
     var json = JSON.stringify(this.contents);
     var prefix = this.options.export ? `var ${this.options.export} = ` : '';
-    var output = `(function() { return ${json}; })()`;
+    var output = `(function() { return ${json}; })();`;
     if (this.bootstrap) {
-      var boot = JSON.stringify(this.bootstrap);
-      output = `(function() { var bootstrap = eval(${boot}); return bootstrap(${output}) })();`;
-    }
-    else {
-      output = output + ';';
+      output = `(function() { ${this.bootstrap}; return ${this.bootsym}(${json}); })();`;
     }
     output = prefix + output;
     return output;

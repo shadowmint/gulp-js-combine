@@ -41,10 +41,10 @@ function test_configure_root(test) {
 
 function test_configure_bootstrap(test) {
   var m = new _manifest.Manifest();
-  m.configure({ root: './', bootstrap: 'bootstrap' });
+  m.configure({ root: './', bootstrap: 'bootstrap', bootsym: 'boot' });
   m.push(_path2['default'].resolve('foo'), 'foo');
   m.push(_path2['default'].resolve('bar'), 'bar');
-  m.push(_path2['default'].resolve('bootstrap'), '(function(x) { return x; })');
+  m.push(_path2['default'].resolve('bootstrap'), 'function boot(x) { return x; }');
   var x = m.emit();
   var y = eval(x);
   test.ok(y.foo == 'foo');

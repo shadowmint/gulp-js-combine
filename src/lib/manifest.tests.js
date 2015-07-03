@@ -26,10 +26,10 @@ export function test_configure_root(test) {
 
 export function test_configure_bootstrap(test) {
   var m = new Manifest();
-  m.configure({root: './', bootstrap: 'bootstrap'});
+  m.configure({root: './', bootstrap: 'bootstrap', bootsym: 'boot'});
   m.push(path.resolve('foo'), 'foo');
   m.push(path.resolve('bar'), 'bar');
-  m.push(path.resolve('bootstrap'), '(function(x) { return x; })');
+  m.push(path.resolve('bootstrap'), 'function boot(x) { return x; }');
   var x = m.emit();
   var y = eval(x);
   test.ok(y.foo == 'foo');

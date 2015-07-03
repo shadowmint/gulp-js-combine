@@ -1,6 +1,12 @@
-(function(foo) {
+function bootstrap(foo) {
   console.log(foo);
-  document.write(foo['class1.html']);
+
+  // Inject content
   document.write('<style>' + foo['class1.css'] + '</style>');
-  document.write('<script>' + foo['class1.js'] + '</script>');
-});
+  document.write(foo['class1.html']);
+
+  // Load a class from a js file
+  var one = eval(`(function() { ${foo['class1.js']}; return One; })()`);
+  var instance = new one();
+  console.log(instance);
+};
