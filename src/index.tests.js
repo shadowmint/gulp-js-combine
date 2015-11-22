@@ -1,6 +1,6 @@
 'use strict';
 
-import sutils from './lib/stream_utils.js';
+import {read_from_stream, read_files_from_stream} from 'gulp-tools/lib/utils';
 import plugin from './index';
 import fs from 'fs';
 import File from 'vinyl';
@@ -12,7 +12,7 @@ export function test_with_buffer(test) {
   var file2 = new File({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("World") });
 
   var stream = plugin();
-  sutils.read_from_stream(stream, function(value) {
+  read_from_stream(stream, 'utf8', function(value) {
     var value = eval(value);
     test.ok(value['source1.js'] == 'Hello');
     test.ok(value['source2.js'] == 'World');
@@ -41,7 +41,7 @@ export function test_with_stream(test) {
   });
 
   var stream = plugin();
-  sutils.read_from_stream(stream, function(value) {
+  read_from_stream(stream, 'utf8', function(value) {
     var value = eval(value);
     test.ok(value['source1.js'] == 'Hello\n');
     test.ok(value['source2.js'] == 'World\n');
@@ -68,7 +68,7 @@ export function test_with_invalid_stream(test) {
     test.ok(true);
     test.done();
   });
-  sutils.read_from_stream(stream, function(value) {
+  read_from_stream(stream, 'utf8', function(value) {
     test.ok(false); // Unreachable
   });
 
@@ -83,7 +83,7 @@ export function test_with_no_options(test) {
   var file2 = new File({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("World") });
 
   var stream = plugin();
-  sutils.read_files_from_stream(stream, function(files) {
+  read_files_from_stream(stream, function(files) {
     test.ok(files.length == 1);
     test.ok(files[0].path = 'combined.js');
     test.done();
@@ -101,7 +101,7 @@ export function test_with_valid_output_option(test) {
   var file2 = new File({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("World") });
 
   var stream = plugin({ output: 'junk.js' });
-  sutils.read_files_from_stream(stream, function(files) {
+  read_files_from_stream(stream, function(files) {
     test.ok(files.length == 1);
     test.ok(files[0].path = 'junk.js');
     test.done();

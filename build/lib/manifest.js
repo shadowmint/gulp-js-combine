@@ -28,24 +28,24 @@ var Manifest = (function () {
     this.bootstrap = null;
   }
 
+  /** Configure options for this */
+
   _createClass(Manifest, [{
     key: 'configure',
-
-    /** Configure options for this */
     value: function configure(options) {
       this.options = options;
       if (this.options.root) {
         this.options.root = _path2['default'].resolve(this.options.root) + '/';
       }
     }
-  }, {
-    key: 'push',
 
     /**
      * Push content into the manfiest
      * If any root is configured, remove it from the given name value.
      * If the bootstrap is passed, do not add to content, and save.
      */
+  }, {
+    key: 'push',
     value: function push(name, value) {
       if (this.options.root) {
         if (name.indexOf(this.options.root) == 0) {
@@ -60,13 +60,13 @@ var Manifest = (function () {
         this.contents[name] = value;
       }
     }
-  }, {
-    key: 'emit',
 
     /**
      * Emit a single javascript block
      * If any bootstrap is specified, run it on the result.
      */
+  }, {
+    key: 'emit',
     value: function emit() {
       var json = JSON.stringify(this.contents);
       var prefix = this.options['export'] ? 'var ' + this.options['export'] + ' = ' : '';

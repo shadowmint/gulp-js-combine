@@ -12,9 +12,7 @@ exports.test_with_invalid_output_option = test_with_invalid_output_option;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _libStream_utilsJs = require('./lib/stream_utils.js');
-
-var _libStream_utilsJs2 = _interopRequireDefault(_libStream_utilsJs);
+var _gulpToolsLibUtils = require('gulp-tools/lib/utils');
 
 var _index = require('./index');
 
@@ -31,11 +29,11 @@ var _vinyl2 = _interopRequireDefault(_vinyl);
 function test_with_buffer(test) {
   test.expect(2);
 
-  var file1 = new _vinyl2['default']({ path: 'source1.js', cwd: 'tests/', base: 'tests/', contents: new Buffer('Hello') });
-  var file2 = new _vinyl2['default']({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer('World') });
+  var file1 = new _vinyl2['default']({ path: 'source1.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("Hello") });
+  var file2 = new _vinyl2['default']({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("World") });
 
   var stream = (0, _index2['default'])();
-  _libStream_utilsJs2['default'].read_from_stream(stream, function (value) {
+  (0, _gulpToolsLibUtils.read_from_stream)(stream, 'utf8', function (value) {
     var value = eval(value);
     test.ok(value['source1.js'] == 'Hello');
     test.ok(value['source2.js'] == 'World');
@@ -64,7 +62,7 @@ function test_with_stream(test) {
   });
 
   var stream = (0, _index2['default'])();
-  _libStream_utilsJs2['default'].read_from_stream(stream, function (value) {
+  (0, _gulpToolsLibUtils.read_from_stream)(stream, 'utf8', function (value) {
     var value = eval(value);
     test.ok(value['source1.js'] == 'Hello\n');
     test.ok(value['source2.js'] == 'World\n');
@@ -91,7 +89,7 @@ function test_with_invalid_stream(test) {
     test.ok(true);
     test.done();
   });
-  _libStream_utilsJs2['default'].read_from_stream(stream, function (value) {
+  (0, _gulpToolsLibUtils.read_from_stream)(stream, 'utf8', function (value) {
     test.ok(false); // Unreachable
   });
 
@@ -102,11 +100,11 @@ function test_with_invalid_stream(test) {
 function test_with_no_options(test) {
   test.expect(2);
 
-  var file1 = new _vinyl2['default']({ path: 'source1.js', cwd: 'tests/', base: 'tests/', contents: new Buffer('Hello') });
-  var file2 = new _vinyl2['default']({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer('World') });
+  var file1 = new _vinyl2['default']({ path: 'source1.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("Hello") });
+  var file2 = new _vinyl2['default']({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("World") });
 
   var stream = (0, _index2['default'])();
-  _libStream_utilsJs2['default'].read_files_from_stream(stream, function (files) {
+  (0, _gulpToolsLibUtils.read_files_from_stream)(stream, function (files) {
     test.ok(files.length == 1);
     test.ok(files[0].path = 'combined.js');
     test.done();
@@ -120,11 +118,11 @@ function test_with_no_options(test) {
 function test_with_valid_output_option(test) {
   test.expect(2);
 
-  var file1 = new _vinyl2['default']({ path: 'source1.js', cwd: 'tests/', base: 'tests/', contents: new Buffer('Hello') });
-  var file2 = new _vinyl2['default']({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer('World') });
+  var file1 = new _vinyl2['default']({ path: 'source1.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("Hello") });
+  var file2 = new _vinyl2['default']({ path: 'source2.js', cwd: 'tests/', base: 'tests/', contents: new Buffer("World") });
 
   var stream = (0, _index2['default'])({ output: 'junk.js' });
-  _libStream_utilsJs2['default'].read_files_from_stream(stream, function (files) {
+  (0, _gulpToolsLibUtils.read_files_from_stream)(stream, function (files) {
     test.ok(files.length == 1);
     test.ok(files[0].path = 'junk.js');
     test.done();
